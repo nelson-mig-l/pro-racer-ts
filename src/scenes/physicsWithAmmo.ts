@@ -20,8 +20,18 @@ class PhysicsSceneWithAmmo implements CreateSceneClass {
     createScene = async (engine: Engine, canvas: HTMLCanvasElement): Promise<Scene> => {
         // This creates a basic Babylon Scene object (non-mesh)
         const scene = new Scene(engine);
-    
+        
         scene.enablePhysics(null, new AmmoJSPlugin(true, ammoModule));
+        const zero = new ammoModule.btVector3(0, 0, 0);
+        
+        console.log(zero);
+        const tm = new ammoModule.btTriangleMesh();
+        console.log("TriangleMesh");
+        console.log(tm);
+        console.log("----");
+        //const meshShape = ammoModule.btBvhTriangleMeshShape(tm, true, true);
+        console.log("====");
+        //console.log(meshShape.name);
     
         // This creates and positions a free camera (non-mesh)
         const camera = new ArcRotateCamera("my first camera", 0, Math.PI / 3, 10, new Vector3(0, 0, 0), scene);
