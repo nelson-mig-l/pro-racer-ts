@@ -55,6 +55,7 @@ export class Car {
     greenMaterial: StandardMaterial;
     blackMaterial: StandardMaterial;
 
+    
     tuning: any;
     vehicle: any;
     wheelMeshes: Mesh[] = [];
