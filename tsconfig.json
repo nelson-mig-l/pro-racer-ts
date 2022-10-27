@@ -13,14 +13,5 @@
 		"preserveConstEnums":true,
         "sourceMap": true,
         "rootDir": "src",
-        "typeRoots": ["node_modules/ammojs-typed/ammo/ambient"],
-        "allowSyntheticDefaultImports": true,
-        "esModuleInterop": true,
-        "lib": [
-            "dom",
-            "es5",
-            "scripthost",
-            "es2015.promise"
-        ]
     }
 }
