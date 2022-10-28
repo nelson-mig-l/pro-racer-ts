@@ -8,3 +8,5 @@ Version 4.8.4
 tsc: The TypeScript Compiler - Version 4.8.4
 
 https://github.com/turingschool-examples/webpack-starter-kit/blob/main/gh-pages-procedure.md
+
+https://dashboard.render.com/static/ github login

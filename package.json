@@ -1,7 +1,7 @@
 {
-    "name": "babylonjs-typescript-webpack-simple-scene",
+    "name": "pro-racer",
     "version": "0.0.1",
-    "description": "A simple scene using Babylon.js, typescript and webpack. What could go wrong?",
+    "description": "Nobody knows what this will turn to be",
     "main": "index.ts",
     "dependencies": {
         "@babylonjs/core": "^5.29.0",
@@ -42,23 +42,22 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/nelson-mig-l/babylonjs-webpack-es6.git"
+        "url": "git+https://github.com/nelson-mig-l/pro-racer-ts.git"
     },
     "keywords": [
         "Babylon.js",
+        "ammojs",
         "webpack",
-        "getting started",
-        "typescript",
-        "es6"
+        "typescript"
     ],
     "author": {
-        "name": "Raanan Weber",
-        "email": "info@raananweber.com",
-        "url": "http://blog.raananweber.com/"
+        "name": "Nelson",
+        "email": "none.of.your@bussines.com",
+        "url": "http://nelson.neocities.org/"
     },
-    "license": "Apache-2.0",
+    "license": "",
     "bugs": {
-        "url": "https://github.com/nelson-mig-l/babylonjs-webpack-es6/issues"
+        "url": "https://github.com/nelson-mig-l/pro-racer-ts/issues"
     },
-    "homepage": "http://nelson-mig-l.github.io/babylonjs-webpack-es6"
+    "homepage": "http://nelson-mig-l.github.io/pro-racer-ts"
 }
