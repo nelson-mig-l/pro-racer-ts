@@ -1032,13 +1032,13 @@ object-assign
 
 /*! core/Misc/PerformanceViewer/performanceViewerCollector */
 
-/*! core/Misc/computePressure */
-
 /*! core/Misc/dataStorage */
 
 /*! core/Misc/logger */
 
 /*! core/Misc/observable */
+
+/*! core/Misc/pressureObserverWrapper */
 
 /*! core/Misc/stringTools */
 
