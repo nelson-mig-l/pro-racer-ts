@@ -5,11 +5,11 @@
     "main": "index.ts",
     "dependencies": {
         "@babylonjs/core": "^5.29.0",
+        "@babylonjs/gui": "^5.29.0",
         "@babylonjs/gui-editor": "^5.29.0",
         "@babylonjs/inspector": "^5.29.0",
         "@babylonjs/loaders": "^5.29.0",
         "@babylonjs/materials": "^5.29.0",
-        "@babylonjs/gui": "^5.29.0",
         "@babylonjs/serializers": "^5.29.0",
         "ammo.js": "0.0.2",
         "ammojs-typed": "^1.0.6"
@@ -20,6 +20,7 @@
         "clean-webpack-plugin": "^4.0.0",
         "eslint": "^8.9.0",
         "file-loader": "^6.2.0",
+        "gh-pages": "^4.0.0",
         "html-webpack-plugin": "^5.5.0",
         "source-map-loader": "^3.0.1",
         "ts-loader": "^8.3.0",
@@ -35,11 +36,13 @@
         "start": "npx webpack serve --config webpack.dev.js",
         "build:dev": "npx webpack --config webpack.dev.js",
         "build": "npx webpack --config webpack.prod.js",
-        "lint": "npx eslint . --ext .ts,.tsx"
+        "lint": "npx eslint . --ext .ts,.tsx",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d dist"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/RaananW/babylonjs-webpack-es6.git"
+        "url": "git+https://github.com/nelson-mig-l/babylonjs-webpack-es6.git"
     },
     "keywords": [
         "Babylon.js",
@@ -55,7 +58,7 @@
     },
     "license": "Apache-2.0",
     "bugs": {
-        "url": "https://github.com/RaananW/babylonjs-webpack-es6/issues"
+        "url": "https://github.com/nelson-mig-l/babylonjs-webpack-es6/issues"
     },
-    "homepage": "https://github.com/RaananW/babylonjs-webpack-es6"
+    "homepage": "http://nelson-mig-l.github.io/babylonjs-webpack-es6"
 }
