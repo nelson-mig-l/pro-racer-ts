@@ -19,6 +19,7 @@ import * as GRID from "@babylonjs/materials/grid";
 
 import {Boxes} from "./boxes"
 import {Car} from "./car";
+import { Controls } from "./controls";
 
 class ProRacerScene implements CreateSceneClass {
     preTasks = [ammoReadyPromise];
@@ -70,154 +71,125 @@ class ProRacerScene implements CreateSceneClass {
 
         ground.material = new GRID.GridMaterial("groundMaterial", scene);
         
-    
-        /*
-        // Our built-in 'sphere' shape.
-        const sphere = SphereBuilder.CreateSphere(
-            "sphere",
-            { diameter: 2, segments: 32 },
-            scene
-        );
-    
-        sphere.physicsImpostor = new PhysicsImpostor(sphere, PhysicsImpostor.SphereImpostor, {
-            mass: 2, 
-            restitution: 0.8
-        }, scene);
-        sphere.material = redMaterial;
-    
-        // Move the sphere upward 1/2 its height
-        sphere.position.y = 5;
-        */
-        // Our built-in 'ground' shape.
-        // const ground = GroundBuilder.CreateGround(
-        //     "ground",
-        //     { width: 6, height: 6 },
-        //     scene
-        // );
-        
-        //ground.physicsImpostor = new PhysicsImpostor(ground, PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.6});
-
         const boxes = new Boxes(scene)
         boxes.baseBoxes();
         boxes.randomBoxes();
 
-        //const actions = {acceleration:false,braking:false,right:false,left:false};
-        const actions = new Map<string, boolean>([
-            ["acceleration", false],
-            ["braking", false],
-            ["right", false],
-            ["left", false]
-        ]);
+        ////const actions = {acceleration:false,braking:false,right:false,left:false};
+        // const actions = new Map<string, boolean>([
+        //     ["acceleration", false],
+        //     ["braking", false],
+        //     ["right", false],
+        //     ["left", false]
+        // ]);
         
-        // const keysActions = {
-        //     "KeyW":'acceleration',
-        //     "KeyS":'braking',
-        //     "KeyA":'left',
-        //     "KeyD":'right'
-        // };
-        const keysActions = new Map<string, string>([
-            ["KeyW",'acceleration'],
-            ["KeyS",'braking'],
-            ["KeyA",'left'],
-            ["KeyD",'right']
-        ]);
+        // // const keysActions = {
+        // //     "KeyW":'acceleration',
+        // //     "KeyS":'braking',
+        // //     "KeyA":'left',
+        // //     "KeyD":'right'
+        // // };
+        // const keysActions = new Map<string, string>([
+        //     ["KeyW",'acceleration'],
+        //     ["KeyS",'braking'],
+        //     ["KeyA",'left'],
+        //     ["KeyD",'right']
+        // ]);
 
-        function keyup(e: KeyboardEvent) {
-            if(keysActions.get(e.code)) {
-                actions.set(keysActions.get(e.code)??"", false);
-                //e.preventDefault();
-                //e.stopPropagation();
+        // function keyup(e: KeyboardEvent) {
+        //     if(keysActions.get(e.code)) {
+        //         actions.set(keysActions.get(e.code)??"", false);
+        //         //e.preventDefault();
+        //         //e.stopPropagation();
         
-                //return false;
-            }
-        }
+        //         //return false;
+        //     }
+        // }
         
-        function keydown(e: KeyboardEvent) {
-            if(keysActions.get(e.code)) {
-                actions.set(keysActions.get(e.code)??"", true);
-                //e.preventDefault();
-                //e.stopPropagation();
+        // function keydown(e: KeyboardEvent) {
+        //     if(keysActions.get(e.code)) {
+        //         actions.set(keysActions.get(e.code)??"", true);
+        //         //e.preventDefault();
+        //         //e.stopPropagation();
         
-                //return false;
-            }
-        }
+        //         //return false;
+        //     }
+        // }
 
         const car = new Car(new Vector3(0, 4, -20), scene, ammoModule);
-
-        window.addEventListener( 'keydown', keydown);
-        window.addEventListener( 'keyup', keyup);
+        const controls = new Controls(car);
 
         scene.registerBeforeRender(function() {
             const dt = engine.getDeltaTime()/*.toFixed()*//1000;
-            if(car.vehicleReady){
-                  
-                const speed = car.vehicle.getCurrentSpeedKmHour();
-                const maxSteerVal = 0.2;
-                car.breakingForce = 0;
-                car.engineForce = 0;
+            controls.update();
+            // if(car.vehicleReady){                  
+            //     const speed = car.vehicle.getCurrentSpeedKmHour();
+            //     const maxSteerVal = 0.2;
+            //     car.breakingForce = 0;
+            //     car.engineForce = 0;
     
                 
-                if(actions.get("acceleration")){
-                    if (speed < -1){
-                        car.breakingForce = car.maxBreakingForce;
-                    }else {
-                        car.engineForce = car.maxEngineForce;
-                    }
+            //     if(actions.get("acceleration")){
+            //         if (speed < -1){
+            //             car.breakingForce = car.maxBreakingForce;
+            //         }else {
+            //             car.engineForce = car.maxEngineForce;
+            //         }
                         
-                } else if(actions.get("braking")){
-                    if (speed > 1){
-                        car.breakingForce = car.maxBreakingForce;
-                    }else {
-                        car.engineForce = -car.maxEngineForce ;
-                    }
-                } 
+            //     } else if(actions.get("braking")){
+            //         if (speed > 1){
+            //             car.breakingForce = car.maxBreakingForce;
+            //         }else {
+            //             car.engineForce = -car.maxEngineForce ;
+            //         }
+            //     } 
                         
-                if(actions.get("right")){
-                    if (car.vehicleSteering < car.steeringClamp){
-                        car.vehicleSteering += car.steeringIncrement;
-                    }
+            //     if(actions.get("right")){
+            //         if (car.vehicleSteering < car.steeringClamp){
+            //             car.vehicleSteering += car.steeringIncrement;
+            //         }
                         
-                } else if(actions.get("left")){
-                    if (car.vehicleSteering > -car.steeringClamp){
-                        car.vehicleSteering -= car.steeringIncrement;
-                    }
+            //     } else if(actions.get("left")){
+            //         if (car.vehicleSteering > -car.steeringClamp){
+            //             car.vehicleSteering -= car.steeringIncrement;
+            //         }
                         
-                } else {
-                    car.vehicleSteering = 0;
-                }
+            //     } else {
+            //         car.vehicleSteering = 0;
+            //     }
                         
-                car.vehicle.applyEngineForce(car.engineForce, car.FRONT_LEFT);
-                car.vehicle.applyEngineForce(car.engineForce, car.FRONT_RIGHT);
+            //     car.vehicle.applyEngineForce(car.engineForce, car.FRONT_LEFT);
+            //     car.vehicle.applyEngineForce(car.engineForce, car.FRONT_RIGHT);
                         
-                car.vehicle.setBrake(car.breakingForce / 2, car.FRONT_LEFT);
-                car.vehicle.setBrake(car.breakingForce / 2, car.FRONT_RIGHT);
-                car.vehicle.setBrake(car.breakingForce, car.BACK_LEFT);
-                car.vehicle.setBrake(car.breakingForce, car.BACK_RIGHT);
+            //     car.vehicle.setBrake(car.breakingForce / 2, car.FRONT_LEFT);
+            //     car.vehicle.setBrake(car.breakingForce / 2, car.FRONT_RIGHT);
+            //     car.vehicle.setBrake(car.breakingForce, car.BACK_LEFT);
+            //     car.vehicle.setBrake(car.breakingForce, car.BACK_RIGHT);
                         
-                car.vehicle.setSteeringValue(car.vehicleSteering, car.FRONT_LEFT);
-                car.vehicle.setSteeringValue(car.vehicleSteering, car.FRONT_RIGHT);
+            //     car.vehicle.setSteeringValue(car.vehicleSteering, car.FRONT_LEFT);
+            //     car.vehicle.setSteeringValue(car.vehicleSteering, car.FRONT_RIGHT);
                         
                         
-                let tm, p, q, i;
-                const n = car.vehicle.getNumWheels();
-                for (i = 0; i < n; i++) {
-                    car.vehicle.updateWheelTransform(i, true);
-                    tm = car.vehicle.getWheelTransformWS(i);
-                    p = tm.getOrigin();
-                    q = tm.getRotation();
-                    car.wheelMeshes[i].position.set(p.x(), p.y(), p.z());
-                    car.wheelMeshes[i].rotationQuaternion?.set(q.x(), q.y(), q.z(), q.w());
-                    car.wheelMeshes[i].rotate(Axis.Z, Math.PI/2);
-                }
+            //     let tm, p, q, i;
+            //     const n = car.vehicle.getNumWheels();
+            //     for (i = 0; i < n; i++) {
+            //         car.vehicle.updateWheelTransform(i, true);
+            //         tm = car.vehicle.getWheelTransformWS(i);
+            //         p = tm.getOrigin();
+            //         q = tm.getRotation();
+            //         car.wheelMeshes[i].position.set(p.x(), p.y(), p.z());
+            //         car.wheelMeshes[i].rotationQuaternion?.set(q.x(), q.y(), q.z(), q.w());
+            //         car.wheelMeshes[i].rotate(Axis.Z, Math.PI/2);
+            //     }
     
-                tm = car.vehicle.getChassisWorldTransform();
-                p = tm.getOrigin();
-                q = tm.getRotation();
-                car.chassisMesh.position.set(p.x(), p.y(), p.z());
-                car.chassisMesh.rotationQuaternion?.set(q.x(), q.y(), q.z(), q.w());
-                car.chassisMesh.rotate(Axis.X, Math.PI);
+            //     tm = car.vehicle.getChassisWorldTransform();
+            //     p = tm.getOrigin();
+            //     q = tm.getRotation();
+            //     car.chassisMesh.position.set(p.x(), p.y(), p.z());
+            //     car.chassisMesh.rotationQuaternion?.set(q.x(), q.y(), q.z(), q.w());
+            //     car.chassisMesh.rotate(Axis.X, Math.PI);
                      
-            }
+            // }
         });
     
         return scene;
