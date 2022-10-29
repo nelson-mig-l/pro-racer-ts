@@ -1,7 +1,7 @@
 {
     "name": "pro-racer",
     "version": "0.0.1",
-    "description": "Nobody knows what this will turn to be",
+    "description": "Will this ever be a racing game?",
     "main": "index.ts",
     "dependencies": {
         "@babylonjs/core": "^5.29.0",
