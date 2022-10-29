@@ -1,0 +1,15 @@
+name: Trigger production build and deploy
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Deploy with gh-pages
+      run: wget https://api.render.com/deploy/${{ secrets.RENDER_TOKEN }}
