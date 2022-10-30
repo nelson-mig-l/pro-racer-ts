@@ -31,6 +31,7 @@ will build to branch `gh-pages`
 ### render.com
 
 trigger to render.com after merge to `master`
+RENDER_TOKEN needs to be set
 
 ## Loading different scenes 
 

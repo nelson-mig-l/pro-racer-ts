@@ -8,12 +8,6 @@ const actions = new Map<string, boolean>([
     ["left", false]
 ]);
 
-// const keysActions = {
-//     "KeyW":'acceleration',
-//     "KeyS":'braking',
-//     "KeyA":'left',
-//     "KeyD":'right'
-// };
 const keysActions = new Map<string, string>([
     ["KeyW",'acceleration'],
     ["KeyS",'braking'],

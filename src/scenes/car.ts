@@ -177,8 +177,7 @@ export class Car {
     }
 
     private createWheelMesh(radius: number, width: number) {
-        //var mesh = new BABYLON.MeshBuilder.CreateBox("wheel", {width:.82, height:.82, depth:.82}, scene);
-        const mesh = MeshBuilder.CreateCylinder("Wheel", {diameter:1, height:0.5, tessellation: 6}, this.scene);
+        const mesh = MeshBuilder.CreateCylinder("Wheel", {diameter:radius*2, height:width, tessellation: 6}, this.scene);
         mesh.rotationQuaternion = new Quaternion();
         mesh.material = this.blackMaterial;
         return mesh;
