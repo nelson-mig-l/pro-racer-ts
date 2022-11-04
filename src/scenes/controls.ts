@@ -1,5 +1,6 @@
 import { Axis } from "@babylonjs/core/Maths/math";
 import { Car } from "./car";
+import { ModelCar } from "./model";
 
 const actions = new Map<string, boolean>([
     ["acceleration", false],
@@ -17,9 +18,9 @@ const keysActions = new Map<string, string>([
 
 export class Controls {
 
-    car: Car;
+    car: ModelCar;
 
-    constructor(car: Car) {
+    constructor(car: ModelCar) {
         this.car = car;
         window.addEventListener( 'keydown', this.keydown);
         window.addEventListener( 'keyup', this.keyup);

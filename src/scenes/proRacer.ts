@@ -15,11 +15,19 @@ import { CreateSceneClass } from "../createScene";
 import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { Axis, Color3 } from "@babylonjs/core/Maths/math";
+import { SceneLoader } from "@babylonjs/core/Loading/sceneLoader";
+
 import * as GRID from "@babylonjs/materials/grid";
 
 import {Boxes} from "./boxes"
 import {Car} from "./car";
 import { Controls } from "./controls";
+import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
+import { ModelCar } from "./model";
+
+
+//import controllerModel from "../../assets/suv.babylon";
+
 
 class ProRacerScene implements CreateSceneClass {
     preTasks = [ammoReadyPromise];
@@ -63,15 +71,46 @@ class ProRacerScene implements CreateSceneClass {
         boxes.baseBoxes();
         boxes.randomBoxes();
 
+        
+        // https://sandbox.babylonjs.com/ to convert gltf to babylon
+        // const importResult = await SceneLoader.ImportMeshAsync(
+        //     "",
+        //     "",
+        //     "suv.babylon",
+        //     undefined,
+        //     undefined//,
+        //     //".babylon"
+        // );
+        const container = await SceneLoader.LoadAssetContainerAsync("", "suv-rot.babylon", undefined, undefined); 
+        {
+            console.log(container.transformNodes);
+            console.log(container.meshes);
+        }
+        const chassis = container.transformNodes[0];
+        const car = new ModelCar(new Vector3(0, 4, -20), scene, ammoModule, chassis);
 
-        const car = new Car(new Vector3(0, 4, -20), scene, ammoModule);
+        /*
+        //console.log(importResult);
+        const x = new TransformNode("chassis");
+        importResult.meshes[0].getChildMeshes()
+            .filter(function(e){return e.name.startsWith("SUV_primitive")})
+            .forEach(function(e){
+                console.log(e.name + " -> " + e);
+            });
+
+            
+        console.log("======")
+        importResult.meshes.forEach(function(e){console.log(e.name)});
+        //importResult.transformNodes.forEach(function(e){console.log(e.name)});
+        */
+        //const car = new Car(new Vector3(0, 4, -20), scene, ammoModule);
         const controls = new Controls(car);
 
         scene.registerBeforeRender(function() {
             const dt = engine.getDeltaTime()/*.toFixed()*//1000;
             controls.update();
         });
-    
+
         return scene;
     };
 

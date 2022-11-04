@@ -7,5 +7,7 @@ declare module '*.env';
 declare module '*.glb';
 declare module '*.stl';
 
+declare module '*.babylon';
+
 // Physics
 declare module "ammo.js";

@@ -2,9 +2,10 @@ import { Mesh, StandardMaterial } from "@babylonjs/core";
 import { FollowCamera } from "@babylonjs/core/Cameras/followCamera";
 import { Color3, Quaternion, Vector3 } from "@babylonjs/core/Maths/math";
 import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
+import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { Scene } from "@babylonjs/core/scene";
 
-export class Car {
+export class ModelCar {
     ZERO_QUATERNION = new Quaternion(); 
 
     FRONT_LEFT = 0;
@@ -64,7 +65,7 @@ export class Car {
 
     vehicleReady = false;
 
-    constructor(pos: Vector3, scene: Scene, ammoModule: any) {
+    constructor(pos: Vector3, scene: Scene, ammoModule: any, xxx: TransformNode) {
         this.greenMaterial = new StandardMaterial("GreenMaterial", scene);
         this.greenMaterial.diffuseColor = new Color3(0.5,0.8,0.5);
         this.greenMaterial.emissiveColor = new Color3(0.5,0.8,0.5);
@@ -79,6 +80,30 @@ export class Car {
 
         this.wheelDirectionCS0 = new ammoModule.btVector3(0, -1, 0);
         this.wheelAxleCS = new ammoModule.btVector3(-1, 0, 0);
+
+        //this.chassisMesh = xxx;
+        //this.chassisMesh.rotate(new Vector3(1, 0, 1), Math.PI);
+        const bbox = xxx.getChildMeshes()[0].getBoundingInfo().boundingBox;
+        console.log(bbox);
+        this.chassisHeight = bbox.maximum.y - bbox.minimum.y;
+        this.chassisLength = bbox.maximum.z - bbox.minimum.z;
+        this.chassisWidth = bbox.maximum.x - bbox.minimum.x;
+        this.chassisMesh = this.createChassisMesh(this.chassisWidth, this.chassisHeight, this.chassisLength);
+
+        this.scene.transformNodes.push(xxx);
+        xxx.getChildMeshes().forEach(m => {
+            //this.chassisMesh.getChildMeshes().push(m);
+            this.chassisMesh.getChildMeshes().push(m);
+            //scene.addMesh(m);
+            //console.log("Added " + m);
+        });
+        //this.chassisMesh.getChildren().push(xxx);
+        //this.chassisMesh.getChildMeshes().forEach(function(e){scene.meshes.push(e)})
+        //this.chassisMesh.setEnabled(true);
+        scene.addMesh(this.chassisMesh);
+        
+
+
 
         const geometry = new ammoModule.btBoxShape(new ammoModule.btVector3(
             this.chassisWidth * .5, 
@@ -97,7 +122,7 @@ export class Car {
         geometry.calculateLocalInertia(this.massVehicle, localInertia);
 
 
-        this.chassisMesh = this.createChassisMesh(this.chassisWidth, this.chassisHeight, this.chassisLength);
+        //this.createChassisMesh(this.chassisWidth, this.chassisHeight, this.chassisLength);
 
 
         const massOffset = new ammoModule.btVector3( 0, 0.4, 0);
@@ -139,10 +164,11 @@ export class Car {
         //this.loadModel();
     }
 
-    private createChassisMesh(w: number, l: number, h: number) : Mesh {
-        const mesh = MeshBuilder.CreateBox("box", {width:w, depth:h, height:l}, this.scene);
+    private createChassisMesh(w: number, l: number, h: number) : Mesh  {
+        const mesh = MeshBuilder.CreateBox("box", {width:w, depth:h, height:l});
         mesh.rotationQuaternion = new Quaternion();
         mesh.material = this.greenMaterial;
+        const mat = mesh.material; if (mat) mat.wireframe = true;
     
         const camera = new FollowCamera("FollowCam", new Vector3(0, 10, -10), this.scene);
         camera.radius = 10;
@@ -151,9 +177,9 @@ export class Car {
         camera.cameraAcceleration = 0.05;
         camera.maxCameraSpeed = 400;
         camera.attachControl(true);//camera.attachControl(canvas, true);
-        camera.lockedTarget = mesh; //version 2.5 onwards
+        camera.lockedTarget = mesh;//.getChildMeshes()[0]; //version 2.5 onwards
         this.scene.activeCamera = camera;
-    
+
         return mesh;
     }
 
