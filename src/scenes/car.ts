@@ -31,10 +31,12 @@ export class Car {
     wheelWidthFront = .3;
 
     friction = 5;
-    suspensionStiffness = 10;
-    suspensionDamping = 0.3;
-    suspensionCompression = 4.4;
-    suspensionRestLength = 0.6;
+    suspension = {
+        stiffness: 10,
+        damping: 0.3,
+        compression: 4.4,
+        restLength: 0.6
+    }
     rollInfluence = 0.0;
 
     wheelDirectionCS0: number | undefined;
@@ -161,14 +163,14 @@ export class Car {
             pos,
             this.wheelDirectionCS0,
             this.wheelAxleCS,
-            this.suspensionRestLength,
+            this.suspension.restLength,
             radius,
             this.tuning,
             isFront);
 
-        wheelInfo.set_m_suspensionStiffness(this.suspensionStiffness);
-        wheelInfo.set_m_wheelsDampingRelaxation(this.suspensionDamping);
-        wheelInfo.set_m_wheelsDampingCompression(this.suspensionCompression);
+        wheelInfo.set_m_suspensionStiffness(this.suspension.stiffness);
+        wheelInfo.set_m_wheelsDampingRelaxation(this.suspension.damping);
+        wheelInfo.set_m_wheelsDampingCompression(this.suspension.compression);
         wheelInfo.set_m_maxSuspensionForce(600000);
         wheelInfo.set_m_frictionSlip(40);
         wheelInfo.set_m_rollInfluence(this.rollInfluence);
@@ -177,7 +179,9 @@ export class Car {
     }
 
     private createWheelMesh(radius: number, width: number) {
-        const mesh = MeshBuilder.CreateCylinder("Wheel", {diameter:radius*2, height:width, tessellation: 6}, this.scene);
+        const mesh = MeshBuilder.CreateCylinder("Wheel", {
+            diameter:radius*2, height:width, tessellation: 6
+        }, this.scene);
         mesh.rotationQuaternion = new Quaternion();
         mesh.material = this.blackMaterial;
         return mesh;

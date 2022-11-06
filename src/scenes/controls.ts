@@ -5,14 +5,16 @@ const actions = new Map<string, boolean>([
     ["acceleration", false],
     ["braking", false],
     ["right", false],
-    ["left", false]
+    ["left", false],
+    ["reset", false]
 ]);
 
 const keysActions = new Map<string, string>([
     ["KeyW",'acceleration'],
     ["KeyS",'braking'],
     ["KeyA",'left'],
-    ["KeyD",'right']
+    ["KeyD",'right'],
+    ["KeyR", 'reset']
 ]);
 
 export class Controls {
@@ -32,6 +34,11 @@ export class Controls {
             const maxSteerVal = 0.2;
             this.car.breakingForce = 0;
             this.car.engineForce = 0;
+
+            if (actions.get("reset")) {
+                this.car.chassisMesh.position.set(0, 5, 0);
+                console.log("reset");
+            }
 
             
             if(actions.get("acceleration")){

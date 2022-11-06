@@ -15,7 +15,7 @@ export const babylonInit = async (): Promise<void> => {
     // Execute the pretasks, if defined
     await Promise.all(createSceneModule.preTasks || []);
     // Get the canvas element
-    const canvas = document.getElementById("renderCanvas") as HTMLCanvasElement;
+    const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     // Generate the BABYLON 3D engine
     let engine: Engine;
     if (engineType === "webgpu") {

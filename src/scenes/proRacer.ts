@@ -21,6 +21,9 @@ import {Boxes} from "./boxes"
 import {Car} from "./car";
 import { Controls } from "./controls";
 
+import grassTextureUrl from "../../assets/grass.jpg";
+import { Texture } from "@babylonjs/core/Materials/Textures/texture";
+
 class ProRacerScene implements CreateSceneClass {
     preTasks = [ammoReadyPromise];
 
@@ -44,8 +47,7 @@ class ProRacerScene implements CreateSceneClass {
 
         scene.enablePhysics(new Vector3(0,-10,0), new AmmoJSPlugin(true, ammoModule));
 
-        // Our built-in 'ground' shape.
-        
+        // Our built-in 'ground' shape. 
         const ground = MeshBuilder.CreateGround("ground", { 
             width: 460, 
             height: 460, 
@@ -56,8 +58,11 @@ class ProRacerScene implements CreateSceneClass {
             friction: 0.5, 
             restitution: 0.7
         }, scene);
+        //ground.material = new GRID.GridMaterial("groundMaterial", scene);
+        const groundMaterial = new StandardMaterial("ground material", scene);
+        groundMaterial.diffuseTexture = new Texture(grassTextureUrl, scene);
+        ground.material = groundMaterial;
 
-        ground.material = new GRID.GridMaterial("groundMaterial", scene);
         
         const boxes = new Boxes(scene)
         boxes.baseBoxes();
@@ -74,7 +79,7 @@ class ProRacerScene implements CreateSceneClass {
     
         return scene;
     };
-
+    
 }
 
 export default new ProRacerScene();

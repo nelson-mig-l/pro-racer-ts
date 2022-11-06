@@ -15,9 +15,11 @@ To run the game:
 5. ????
 6. Profit
 
-Running `npm start` will start the webpack dev server with hot-reloading turned on. Open your favorite editor (mine is VSCode, but you can use nano. we don't discriminate) and start editing.
+Running `npm start` will start the webpack dev server with hot-reloading turned on.
 
-The entry point for the entire TypeScript application is `./src/index.ts`. Any other file imported in this file will be included in the build.
+The entry point for the entire TypeScript application is `./src/index.ts`. 
+
+### Debuging
 
 To debug, open the browser's dev tool. Source maps are ready to be used. In case you are using VSCode, simply run the default debugger task (`Launch Chrome against localhost`) while making sure `npm start` is still running. This will allow you to debug your application straight in your editor.
 
